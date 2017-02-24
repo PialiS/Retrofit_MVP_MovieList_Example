@@ -3,6 +3,7 @@ package com.example.latestmoviesampleapp.main.presenter;
 import android.content.Context;
 
 import com.example.latestmoviesampleapp.BasePresenter;
+import com.example.latestmoviesampleapp.Utils;
 import com.example.latestmoviesampleapp.main.model.MovieResponse;
 import com.example.latestmoviesampleapp.main.model.Result;
 import com.example.latestmoviesampleapp.main.service.ApiClient;
@@ -21,7 +22,7 @@ import retrofit2.Response;
 
 public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
-    private static final String API_KEY ="29e344c1565e9fcc38d011ea8fd4ff33";
+
     private MainView mView;
     private MainPresenterImpl mMainPresenterImpl;
     private ApiClient apiClient;
@@ -43,7 +44,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
     @Override
     public List<Result> loadDatas() {
-        apiClient.getClient().getPopularMovies(API_KEY).enqueue(new Callback<MovieResponse>() {
+        apiClient.getClient().getPopularMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 MovieResponse responseReceived = response.body();

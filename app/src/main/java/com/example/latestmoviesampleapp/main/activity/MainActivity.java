@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity implements MainView, CustomGridAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle(null);
+        setTitle("Retrofit MovieList Example");
 
         Toolbar topToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(topToolBar);
