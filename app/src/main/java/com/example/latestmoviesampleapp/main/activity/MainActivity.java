@@ -1,8 +1,9 @@
 package com.example.latestmoviesampleapp.main.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,22 +17,18 @@ import com.example.latestmoviesampleapp.main.model.Result;
 import com.example.latestmoviesampleapp.main.presenter.MainPresenterImpl;
 import com.example.latestmoviesampleapp.main.view.MainView;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by piubips on 20/02/2017.
  */
 
-public class MainActivity extends BaseActivity implements MainView, CustomGridAdapter.CustomGridItemClickListener {
-
-    private MainPresenterImpl mPresenter;
-    private MainView mainView;
+public class MainActivity extends BaseActivity implements MainView {
 
     RecyclerView recyclerView;
-    private GridLayoutManager mGridLayoutManager;
+    ProgressDialog mProgressDialog;
 
-    List<Result> resultList;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -45,22 +42,21 @@ public class MainActivity extends BaseActivity implements MainView, CustomGridAd
         topToolBar.setLogo(R.mipmap.ic_launcher);
         topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
 
-        mPresenter = new MainPresenterImpl(this,this);
-        mPresenter.loadDatas();
-        resultList=new ArrayList<>();
+
         initRecycleView();
+        MainPresenterImpl  mPresenter = new MainPresenterImpl(this, this);
+        mPresenter.getMoviesList();
 
 
     }
 
     private void initRecycleView() {
         recyclerView = (RecyclerView) findViewById(R.id.movies_recycler_view);
-        mGridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
-        recyclerView.setLayoutManager(mGridLayoutManager);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setHasFixedSize(true);
 
-        CustomGridAdapter mCustomGridAdapter = new CustomGridAdapter(MainActivity.this,this, resultList);
-        recyclerView.setAdapter(mCustomGridAdapter);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
@@ -83,43 +79,48 @@ public class MainActivity extends BaseActivity implements MainView, CustomGridAd
         if (id == R.id.action_settings) {
             return true;
         }
-        if(id == R.id.action_refresh){
-            Toast.makeText(MainActivity.this, "Refresh App", Toast.LENGTH_LONG).show();
+        if (id == R.id.action_refresh) {
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onMovieItemClick(Result result) {
-
-    }
 
     @Override
     public void showProgress() {
+         mProgressDialog=new ProgressDialog(MainActivity.this);
+        mProgressDialog.setMessage("Please Wait!");
+        mProgressDialog.show();
+
 
     }
 
-    @Override
-    public void hideProgress() {
 
+    private void hideProgress() {
+      mProgressDialog.hide();
     }
 
     @Override
     public void showMovieClickedMessage(Result result) {
-      //  Toast.makeText(this, String.format(getString(R.string.main_toast_weather_item_click), resultList.get(index).getTitle()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, String.format(getString(R.string.main_toast_weather_item_click), result.getTitle()), Toast.LENGTH_LONG).show();
 
 
     }
 
     @Override
-    public void showWeathers(List<Result> resultList) {
+    public void showWeathers(List<Result> resultList, HashMap<Integer,String> genericMap) {
+        hideProgress();
+        CustomGridAdapter mCustomGridAdapter = new CustomGridAdapter(MainActivity.this, this, resultList, genericMap);
+        recyclerView.setAdapter(mCustomGridAdapter);
 
     }
 
-    @Override
-    public void showConnectionError() {
-        Toast.makeText(this, R.string.main_error_connection, Toast.LENGTH_SHORT).show();
 
+
+    @Override
+    public void showError(String message) {
+        hideProgress();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

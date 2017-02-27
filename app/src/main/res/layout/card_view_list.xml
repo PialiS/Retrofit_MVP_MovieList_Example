@@ -3,21 +3,22 @@
     android:id="@+id/card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardUseCompatPadding="true">
+    android:layout_margin="16dp"
+
+    card_view:cardCornerRadius="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark">
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:layout_margin="5dp">
 
         <ImageView
             android:id="@+id/movie_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/action_settings"
-            android:scaleType="center"
+            android:scaleType="fitXY"
             android:src="@drawable/flower3" />
 
 
@@ -28,7 +29,7 @@
             android:layout_below="@+id/movie_photo"
             android:gravity="center_horizontal"
             android:text="@string/movie_name"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="13sp" />
 
         <TextView
@@ -38,7 +39,8 @@
             android:layout_below="@+id/name_text"
             android:gravity="center_horizontal"
             android:text="@string/movie_genre"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
+
             android:textSize="12sp" />
 
         <LinearLayout
@@ -57,7 +59,7 @@
                 android:layout_weight="0.75"
                 android:text="@string/movie_rating"
                 android:textAlignment="center"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:textSize="12sp" />
 
             <ImageView
@@ -83,7 +85,7 @@
                 android:layout_weight="0.75"
                 android:text="@string/movie_release_date"
                 android:textAlignment="center"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:textSize="12sp" />
 
             <ImageView

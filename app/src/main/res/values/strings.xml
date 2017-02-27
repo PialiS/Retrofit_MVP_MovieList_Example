@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LatestMovieSampleApp</string>
+    <string name="app_name">Retrofit MovieList Example</string>
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Settings</string>
     <string name="action_new">Settings</string>

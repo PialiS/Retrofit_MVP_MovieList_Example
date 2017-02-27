@@ -2,6 +2,7 @@ package com.example.latestmoviesampleapp.main.view;
 
 import com.example.latestmoviesampleapp.main.model.Result;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,14 +11,15 @@ import java.util.List;
 
 public interface MainView {
 
-    public void showProgress();
+    void showProgress();
 
-    public void hideProgress();
+
 
     void showMovieClickedMessage(Result result);
 
-    void showWeathers(List<Result> resultList);
+    void showWeathers(List<Result> resultList, HashMap<Integer, String> genericKeyValuePair);
 
-    void showConnectionError();
+
+    void showError(String message);
 
 }
