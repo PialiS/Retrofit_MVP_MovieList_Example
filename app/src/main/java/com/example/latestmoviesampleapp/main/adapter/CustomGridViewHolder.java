@@ -15,6 +15,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by piubips on 24/02/2017.
  */
@@ -23,22 +26,30 @@ public class CustomGridViewHolder extends RecyclerView.ViewHolder {
 
    // MainView mListener;
 
-    private TextView movieNameText;
-    private TextView genreText;
-    private TextView ratingText;
-    private TextView releaseDateText;
-    private ImageView movieImage;
+//    private TextView movieNameText;
+//    private TextView genreText;
+//    private TextView ratingText;
+//    private TextView releaseDateText;
+//    private ImageView movieImage;
+
+
+    @BindView(R.id.name_text) TextView movieNameText;
+    @BindView(R.id.genre_text) TextView genreText;
+    @BindView(R.id.rating_text) TextView ratingText;
+    @BindView(R.id.release_date_text) TextView releaseDateText;
+    @BindView(R.id.movie_photo) ImageView movieImage;
 
 
     public CustomGridViewHolder(View itemView) {
         super(itemView);
+        ButterKnife.bind(this,itemView);
 
 
-        movieNameText = (TextView) itemView.findViewById(R.id.name_text);
-        genreText = (TextView) itemView.findViewById(R.id.genre_text);
-        ratingText = (TextView) itemView.findViewById(R.id.rating_text);
-        releaseDateText = (TextView) itemView.findViewById(R.id.release_date_text);
-        movieImage = (ImageView) itemView.findViewById(R.id.movie_photo);
+//        movieNameText = (TextView) itemView.findViewById(R.id.name_text);
+//        genreText = (TextView) itemView.findViewById(R.id.genre_text);
+//        ratingText = (TextView) itemView.findViewById(R.id.rating_text);
+//        releaseDateText = (TextView) itemView.findViewById(R.id.release_date_text);
+//        movieImage = (ImageView) itemView.findViewById(R.id.movie_photo);
     }
 
     public void bindView(Context context, final Result result, HashMap<Integer, String> mGeneric,final MainView mListener) {

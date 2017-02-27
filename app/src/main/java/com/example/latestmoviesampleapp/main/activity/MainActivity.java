@@ -20,39 +20,50 @@ import com.example.latestmoviesampleapp.main.view.MainView;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by piubips on 20/02/2017.
  */
 
 public class MainActivity extends BaseActivity implements MainView {
 
-    RecyclerView recyclerView;
+    // RecyclerView recyclerView;
     ProgressDialog mProgressDialog;
+    List<Result> mResultList;
+    HashMap<Integer, String> mGenericMap;
+    MainView mView;
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    @BindView(R.id.movies_recycler_view)
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         setTitle("Retrofit MovieList Example");
+
 
         Toolbar topToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(topToolBar);
-        topToolBar.setLogo(R.mipmap.ic_launcher);
+        topToolBar.setLogo(R.drawable.star);
         topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
 
 
         initRecycleView();
-        MainPresenterImpl  mPresenter = new MainPresenterImpl(this, this);
+        MainPresenterImpl mPresenter = new MainPresenterImpl(this, this);
         mPresenter.getMoviesList();
 
 
     }
 
-    private void initRecycleView() {
-        recyclerView = (RecyclerView) findViewById(R.id.movies_recycler_view);
 
+    private void initRecycleView() {
+        // recyclerView = (RecyclerView) findViewById(R.id.movies_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setHasFixedSize(true);
 
@@ -75,11 +86,12 @@ public class MainActivity extends BaseActivity implements MainView {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         }
         if (id == R.id.action_refresh) {
+            Toast.makeText(MainActivity.this, "Action Refresh Clicked", Toast.LENGTH_LONG).show();
 
         }
 
@@ -93,29 +105,24 @@ public class MainActivity extends BaseActivity implements MainView {
         mProgressDialog.setMessage("Please Wait!");
         mProgressDialog.show();
 
-
     }
 
 
     private void hideProgress() {
-      mProgressDialog.hide();
+        mProgressDialog.hide();
     }
 
     @Override
     public void showMovieClickedMessage(Result result) {
         Toast.makeText(MainActivity.this, String.format(getString(R.string.main_toast_weather_item_click), result.getTitle()), Toast.LENGTH_LONG).show();
-
-
     }
 
     @Override
-    public void showWeathers(List<Result> resultList, HashMap<Integer,String> genericMap) {
+    public void displayMovies(List<Result> resultList, HashMap<Integer, String> genericMap) {
         hideProgress();
         CustomGridAdapter mCustomGridAdapter = new CustomGridAdapter(MainActivity.this, this, resultList, genericMap);
         recyclerView.setAdapter(mCustomGridAdapter);
-
     }
-
 
 
     @Override

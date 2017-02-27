@@ -13,12 +13,9 @@ public interface MainView {
 
     void showProgress();
 
-
-
     void showMovieClickedMessage(Result result);
 
-    void showWeathers(List<Result> resultList, HashMap<Integer, String> genericKeyValuePair);
-
+    void displayMovies(List<Result> resultList, HashMap<Integer, String> genericKeyValuePair);
 
     void showError(String message);
 

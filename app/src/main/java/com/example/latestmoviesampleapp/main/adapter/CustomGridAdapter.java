@@ -39,7 +39,7 @@ public class CustomGridAdapter extends RecyclerView.Adapter<CustomGridViewHolder
 
     @Override
     public CustomGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.card_view_list, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.card_view_grid, parent, false);
         return new CustomGridViewHolder(view);
     }
 

@@ -74,7 +74,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
                 public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                     MovieResponse responseReceived = response.body();
 
-                    mView.showWeathers(responseReceived.getResults(), genericMap);
+                    mView.displayMovies(responseReceived.getResults(), genericMap);
 
                 }
 
