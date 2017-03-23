@@ -10,6 +10,7 @@ import com.example.latestmoviesampleapp.R;
 import com.example.latestmoviesampleapp.main.model.Result;
 import com.example.latestmoviesampleapp.main.view.MainView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CustomGridAdapter extends RecyclerView.Adapter<CustomGridViewHolder
 
     @Override
     public CustomGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.card_view_grid, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.card_view_list, parent, false);
         return new CustomGridViewHolder(view);
     }
 
@@ -47,7 +48,7 @@ public class CustomGridAdapter extends RecyclerView.Adapter<CustomGridViewHolder
     public void onBindViewHolder(CustomGridViewHolder holder, int position) {
 
 
-        holder.bindView(mContext, resultList.get(position), mGeneric,mListener);
+        holder.bindView(mContext, resultList.get(position), mGeneric, mListener);
 
 
     }
@@ -57,5 +58,29 @@ public class CustomGridAdapter extends RecyclerView.Adapter<CustomGridViewHolder
         return resultList.size();
     }
 
+    public void updateItemList(List<Result> updatedResultList) {
 
+
+//        ArrayList<Result> newResultItems = new ArrayList<>();
+//        for (int i = 0; i < updatedResultList.size(); i++) {
+//
+//            if (!resultList.contains(updatedResultList.get(i))) {
+//                newResultItems.add(updatedResultList.get(i));
+//            }
+//        }
+//        if (!newResultItems.isEmpty()) {
+//            int itemCount = getItemCount();
+//            resultList.addAll(newResultItems);
+//            notifyItemRangeInserted(itemCount, resultList.size());
+//
+//        }
+
+        resultList.clear();
+        ArrayList<Result> newResultItems = new ArrayList<>();
+        for (int i = 0; i < updatedResultList.size(); i++) {
+        }
+        }
+
+
+//    }
 }

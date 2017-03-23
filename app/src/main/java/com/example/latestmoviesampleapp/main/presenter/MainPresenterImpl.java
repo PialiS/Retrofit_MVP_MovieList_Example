@@ -53,12 +53,12 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
                     }
                 }
 
-                loadDatas(genericMap);
+                loadMovies(false,genericMap);
             }
 
             @Override
             public void onFailure(Call<GenreResponse> call, Throwable t) {
-                //   mView.hideProgress();
+                  mView.hideProgress();
                 mView.showError("Error while getching generic Tag");
             }
         });
@@ -66,21 +66,25 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
     }
 
-    private void loadDatas(final HashMap<Integer, String> genericMap) {
-
+    @Override
+    public void loadMovies( final boolean isMapAvailable, final HashMap<Integer, String> genericMap) {
+        if (isMapAvailable){
+            mView.showProgress();
+        }
         if (!genericMap.isEmpty()) {
             apiClient.getClient().getPopularMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
                 @Override
                 public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                    mView.hideProgress();
                     MovieResponse responseReceived = response.body();
 
-                    mView.displayMovies(responseReceived.getResults(), genericMap);
+                    mView.displayMovies(isMapAvailable,responseReceived.getResults(), genericMap);
 
                 }
 
                 @Override
                 public void onFailure(Call<MovieResponse> call, Throwable t) {
-                    //  mView.hideProgress();
+                      mView.hideProgress();
                     mView.showError("Error while fetching movielist");
                 }
             });
@@ -88,7 +92,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
         }
 
         else {
-            //   mView.hideProgress();
+              mView.hideProgress();
             mView.showError("No Movie List Available");
         }
 

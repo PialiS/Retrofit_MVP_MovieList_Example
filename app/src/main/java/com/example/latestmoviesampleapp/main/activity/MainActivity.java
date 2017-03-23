@@ -11,11 +11,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.latestmoviesampleapp.BaseActivity;
+import com.example.latestmoviesampleapp.MainApplication;
 import com.example.latestmoviesampleapp.R;
 import com.example.latestmoviesampleapp.main.adapter.CustomGridAdapter;
 import com.example.latestmoviesampleapp.main.model.Result;
 import com.example.latestmoviesampleapp.main.presenter.MainPresenterImpl;
 import com.example.latestmoviesampleapp.main.view.MainView;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,9 +33,10 @@ public class MainActivity extends BaseActivity implements MainView {
 
     // RecyclerView recyclerView;
     ProgressDialog mProgressDialog;
-    List<Result> mResultList;
-    HashMap<Integer, String> mGenericMap;
-    MainView mView;
+
+    HashMap<Integer, String> genericMap;
+    MainPresenterImpl mPresenter;
+    CustomGridAdapter mCustomGridAdapter;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -55,8 +58,10 @@ public class MainActivity extends BaseActivity implements MainView {
 
 
         initRecycleView();
-        MainPresenterImpl mPresenter = new MainPresenterImpl(this, this);
+        mPresenter = new MainPresenterImpl(this, this);
         mPresenter.getMoviesList();
+
+        //values boolean
 
 
     }
@@ -64,8 +69,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
     private void initRecycleView() {
         // recyclerView = (RecyclerView) findViewById(R.id.movies_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -86,14 +91,14 @@ public class MainActivity extends BaseActivity implements MainView {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
         if (id == R.id.action_refresh) {
             Toast.makeText(MainActivity.this, "Action Refresh Clicked", Toast.LENGTH_LONG).show();
+            // displayMovies(resultList, genericMap);
+            mPresenter.loadMovies(true, genericMap);
+
 
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -101,15 +106,15 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void showProgress() {
-         mProgressDialog=new ProgressDialog(MainActivity.this);
+        mProgressDialog = new ProgressDialog(MainActivity.this);
         mProgressDialog.setMessage("Please Wait!");
         mProgressDialog.show();
 
     }
 
 
-    private void hideProgress() {
-        mProgressDialog.hide();
+    public void hideProgress() {
+        mProgressDialog.dismiss();
     }
 
     @Override
@@ -118,16 +123,29 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void displayMovies(List<Result> resultList, HashMap<Integer, String> genericMap) {
-        hideProgress();
-        CustomGridAdapter mCustomGridAdapter = new CustomGridAdapter(MainActivity.this, this, resultList, genericMap);
-        recyclerView.setAdapter(mCustomGridAdapter);
+    public void displayMovies(boolean isMapAvailable, List<Result> resultList, HashMap<Integer, String> map) {
+        if (isMapAvailable) {
+            mCustomGridAdapter.updateItemList(resultList);
+        } else {
+            genericMap = map;
+            mCustomGridAdapter = new CustomGridAdapter(MainActivity.this, this, resultList, genericMap);
+            recyclerView.setAdapter(mCustomGridAdapter);
+        }
+
     }
 
 
     @Override
     public void showError(String message) {
-        hideProgress();
+        //hideProgress();
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = MainApplication.getRefWatcher(MainActivity.this);
+        refWatcher.watch(this);
+
     }
 }

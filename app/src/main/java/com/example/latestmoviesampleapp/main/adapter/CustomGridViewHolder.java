@@ -79,9 +79,6 @@ public class CustomGridViewHolder extends RecyclerView.ViewHolder {
 
        genreText.setText(TextUtils.isEmpty(genericTag)? "No Information Available" : genericTag);
 
-
-
-
         itemView.setOnClickListener(new View.OnClickListener() {
 
 
