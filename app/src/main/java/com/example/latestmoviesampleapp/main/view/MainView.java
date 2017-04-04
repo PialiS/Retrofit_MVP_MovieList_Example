@@ -17,7 +17,7 @@ public interface MainView {
 
     void showMovieClickedMessage(Result result);
 
-    void displayMovies(boolean isMapAvailable, List<Result> resultList, HashMap<Integer, String> genericKeyValuePair);
+    void displayMovies(List<Result> resultList, HashMap<Integer, String> genericKeyValuePair);
 
     void showError(String message);
 

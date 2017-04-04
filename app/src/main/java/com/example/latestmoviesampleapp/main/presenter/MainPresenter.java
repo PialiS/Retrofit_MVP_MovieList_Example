@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public interface MainPresenter {
     void getMoviesList();
-    void loadMovies( boolean isMapAvailable, final HashMap<Integer, String> genericMap) ;
+    void loadMovies(final HashMap<Integer, String> genericMap) ;
 
 
 }

@@ -53,7 +53,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
                     }
                 }
 
-                loadMovies(false,genericMap);
+                loadMovies(genericMap);
             }
 
             @Override
@@ -66,37 +66,62 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
     }
 
-    @Override
-    public void loadMovies( final boolean isMapAvailable, final HashMap<Integer, String> genericMap) {
-        if (isMapAvailable){
-            mView.showProgress();
-        }
-        if (!genericMap.isEmpty()) {
-            apiClient.getClient().getPopularMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
-                @Override
-                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                    mView.hideProgress();
-                    MovieResponse responseReceived = response.body();
+//
+//    @Override
+//    public void loadMovies( final boolean isMapAvailable, final HashMap<Integer, String> genericMap) {
+//        if (isMapAvailable){
+//            mView.showProgress();
+//        }
+//        if (!genericMap.isEmpty()) {
+//            apiClient.getClient().getPopularMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
+//                @Override
+//                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+//                    mView.hideProgress();
+//                    MovieResponse responseReceived = response.body();
+//
+//                    mView.displayMovies(isMapAvailable,responseReceived.getResults(), genericMap);
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<MovieResponse> call, Throwable t) {
+//                      mView.hideProgress();
+//                    mView.showError("Error while fetching movielist");
+//                }
+//            });
+//
+//        }
+//
+//        else {
+//              mView.hideProgress();
+//            mView.showError("No Movie List Available");
+//        }
 
-                    mView.displayMovies(isMapAvailable,responseReceived.getResults(), genericMap);
+        @Override
+        public void loadMovies( final HashMap<Integer, String> genericMap) {
 
-                }
+                apiClient.getClient().getPopularMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
+                    @Override
+                    public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                        mView.hideProgress();
+                        MovieResponse responseReceived = response.body();
 
-                @Override
-                public void onFailure(Call<MovieResponse> call, Throwable t) {
-                      mView.hideProgress();
-                    mView.showError("Error while fetching movielist");
-                }
-            });
+                        mView.displayMovies(responseReceived.getResults(), genericMap);
 
-        }
+                    }
 
-        else {
-              mView.hideProgress();
-            mView.showError("No Movie List Available");
-        }
+                    @Override
+                    public void onFailure(Call<MovieResponse> call, Throwable t) {
+                        mView.hideProgress();
+                        mView.showError("Error while fetching movielist");
+                    }
+                });
 
-    }
+            }
+
+
+
+
 
 
 }
