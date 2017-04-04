@@ -21,17 +21,17 @@ public class RecycleViewTest {
     @Rule
     public ActivityTestRule<MainActivity> activityActivityTestRule=new ActivityTestRule<>(MainActivity.class);
 
-    private static final String MOVIE_TITLE = "Kong: Skull Island";
-    private static final String MOVIE_RELEASE_DATE = "2017-03-08";
-    private static final String MOVIE_RATING="6.1";
-    private static final String MOVIE_GENRE="Science,Fiction,Action,Adventure,Fantacy";
+    private static final String MOVIE_TITLE = "Beauty and the Beast";
+    private static final String MOVIE_RELEASE_DATE = "2017-03-17";
+    private static final String MOVIE_RATING="7.1";
+    private static final String MOVIE_GENRE="Fantacy, Music, Romance";
 
 
 
     @Test
     public void testClickAtPosition(){
 
-        onView(withId(R.id.movies_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        onView(withId(R.id.movies_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.name_text)).check(matches(withText(MOVIE_TITLE)));
         onView(withId(R.id.genre_text)).check(matches(withText(MOVIE_GENRE)));
         onView(withId(R.id.rating_text)).check(matches(withText(MOVIE_RATING)));

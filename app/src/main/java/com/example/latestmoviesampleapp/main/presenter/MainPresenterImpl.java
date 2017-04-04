@@ -38,7 +38,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
     }
 
     @Override
-    public void getMoviesList() {
+    public void getMovieGenres() {
         mView.showProgress();
 
         apiClient.getClient().getGenreMovies(Utils.API_KEY).enqueue(new Callback<GenreResponse>() {
@@ -53,7 +53,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
                     }
                 }
 
-                loadMovies(genericMap);
+                getMovieList(genericMap);
             }
 
             @Override
@@ -68,7 +68,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
 //
 //    @Override
-//    public void loadMovies( final boolean isMapAvailable, final HashMap<Integer, String> genericMap) {
+//    public void getMovieList( final boolean isMapAvailable, final HashMap<Integer, String> genericMap) {
 //        if (isMapAvailable){
 //            mView.showProgress();
 //        }
@@ -98,7 +98,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 //        }
 
         @Override
-        public void loadMovies( final HashMap<Integer, String> genericMap) {
+        public void getMovieList(final HashMap<Integer, String> genericMap) {
 
                 apiClient.getClient().getPopularMovies(Utils.API_KEY).enqueue(new Callback<MovieResponse>() {
                     @Override

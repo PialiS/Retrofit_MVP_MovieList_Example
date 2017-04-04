@@ -7,8 +7,12 @@ import java.util.HashMap;
  */
 
 public interface MainPresenter {
-    void getMoviesList();
-    void loadMovies(final HashMap<Integer, String> genericMap) ;
+
+  //method to get Genre from API
+    void getMovieGenres();
+
+    //method to get MovieList from API
+    void getMovieList(final HashMap<Integer, String> genericMap) ;
 
 
 }

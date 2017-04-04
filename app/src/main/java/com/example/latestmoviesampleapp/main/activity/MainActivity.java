@@ -60,7 +60,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
 
         mPresenter = new MainPresenterImpl(this, this);
-        mPresenter.getMoviesList();
+        //Calling Presenter method to get MovieList and Movie Genre from API
+        mPresenter.getMovieGenres();
 
 
     }
@@ -87,7 +88,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
 
-    //method is called when recycleview row items are clicked
+
     @Override
     public void showMovieClickedMessage(Result result) {
         Toast.makeText(MainActivity.this, String.format(getString(R.string.main_toast_weather_item_click), result.getTitle()), Toast.LENGTH_LONG).show();

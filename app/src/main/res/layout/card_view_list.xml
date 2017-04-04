@@ -35,9 +35,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/movie_photo"
-            android:text="Rihanna"
+            android:text="Beauty and the Beast"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="15dip"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:typeface="sans" />
 
